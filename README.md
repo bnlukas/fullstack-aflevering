@@ -1,12 +1,14 @@
+**OBS** 
+
+**HAR HAFT RIGTIG MANGE PROBLEMER MED GIT - JEG BEKLAGER HVIS MIN FILSTRUKTUR ER MESSY " I AM SORRY FOR THE INCONVENIENCE - WILL NOT HAPPN AGIAN"**
+
+
+
 **# Fullstack Reddit Clone**
 
 
 
 **Dette er et fuldt fungerende fullstack-projekt lavet i Blazor WebAssembly (frontend), .NET 9 (backend) og et Shared projekt med C# modeller.**
-
-
-
-**---**
 
 
 
@@ -31,9 +33,6 @@
 **└── .gitignore**
 
 
-
-
-
 **---**
 
 
@@ -50,13 +49,9 @@
 
 **- Git**
 
-
-
 **### Kør backend**
 
 **Åbn terminal i `backend/reddit-clone`:**
-
-
 
 **```bash**
 
@@ -74,5 +69,4 @@
 
 **dotnet run** 
 
-
-
+**
