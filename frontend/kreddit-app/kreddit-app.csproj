@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="MainLayout.razor" />
     <None Include="Pages\CreateComment.razor" />
     <None Include="Shared\obj\project.assets.json" />
     <None Include="Shared\obj\Shared.csproj.nuget.dgspec.json" />
