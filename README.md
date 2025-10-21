@@ -10,7 +10,7 @@
 **reddit-fullstack**/
 
 
-├── **backend**/ # ASP.NET Core Web API
+├── **backend**/ # Web API “Minimal API”
 
 ├── **frontend**/ # Blazor WebAssembly app
 
