@@ -8,6 +8,8 @@
 ## Project Structure
 
 **reddit-fullstack**/
+
+
 ├── **backend**/ # ASP.NET Core Web API
 
 ├── **frontend**/ # Blazor WebAssembly app
