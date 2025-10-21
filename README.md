@@ -1,8 +1,5 @@
-**LAVET AF LUKAS** 
-
-- **Backend**: Web API “Minimal API”
-- **Frontend**: Blazor WebAssembly  
-- **Shared**: Class library for shared models
+## Aflevering 
+## Lavet af Lukas 
 
 
 ## Project Structure
