@@ -1,78 +1,31 @@
-**# Fullstack Reddit Clone**
+**LAVET AF LUKAS** 
+
+- **Backend**: Web API “Minimal API”
+- **Frontend**: Blazor WebAssembly  
+- **Shared**: Class library for shared models
 
 
+## Project Structure
 
-**Dette er et fuldt fungerende fullstack-projekt lavet i Blazor WebAssembly (frontend), .NET 9 (backend) og et Shared projekt med C# modeller.**
-
-
-
-**---**
+**reddit-fullstack**/
 
 
+├── **backend**/ # Web API “Minimal API”
 
-**## Projektstruktur**
+├── **frontend**/ # Blazor WebAssembly app
 
+├── **shared**/ # Shared class library
 
-
-**reddit-fullstack/**
-
-**│**
-
-**├── backend/ # .NET API projekt**
-
-**│ └── reddit-clone/**
-
-**├── frontend/ # Blazor WebAssembly frontend**
-
-**│ └── kreddit-app/**
-
-**├── shared/ # C# modeller (Post, Comment, User)**
-
-**└── .gitignore**
+└── **RedditApp.sln** # Main solution file
 
 
+## Run Project
+- **cd** reddit-fullstack\backend\reddit-clone 
+- **dotnet** build
+- **dotnet** ef database update
+- **dotnet** run
 
-
-
-**---**
-
-
-
-**## Installation \& Kørsel**
-
-
-
-**### Forudsætninger**
-
-**- .NET 9 SDK installeret**
-
-**- Visual Studio / Rider / VS Code (valgfrit)**
-
-**- Git**
-
-
-
-**### Kør backend**
-
-**Åbn terminal i `backend/reddit-clone`:**
-
-
-
-**```bash**
-
-**dotnet run**
-
-**API kører typisk på https://localhost:7228**
-
-
-
-
-
-**## Kør frontend** 
-
-**Åben ny terminal i frontend/kreddit-app** 
-
-**dotnet run** 
-
-
+- **cd** reddit-fullstack\frontend\kreddit-app
+- **dotnet** build
+- **dotnet** run
 
