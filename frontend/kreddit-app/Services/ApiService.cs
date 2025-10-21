@@ -52,12 +52,12 @@ public class ApiService
     
     public async Task<bool> UpvoteComment(int postId, int commentId)
     {
-        var response = await http.PostAsync($"api/threads/{postId}/upvotecomments?commentId={commentId}", null);
+        var response = await http.PostAsync($"api/threads/{postId}/upvotecomment?commentId={commentId}", null);
         return response.IsSuccessStatusCode;
     }
     public async Task<bool> DownvoteComment(int postId, int commentId)
     {
-        var response = await http.PostAsync($"api/threads/{postId}/downvotecomments?commentId={commentId}", null);
+        var response = await http.PostAsync($"api/threads/{postId}/downvotecomment?commentId={commentId}", null);
         return response.IsSuccessStatusCode;
     }
 
@@ -83,7 +83,7 @@ public class ApiService
     public async Task<Post[]> GetPostsSorted(string sortBy = "newest", string filterBy = "all")
     {
         return await http.GetFromJsonAsync<Post[]>($"api/threads/sorted?sortBy={sortBy}&filterBy={filterBy}") 
-               ?? Array.Empty<Post>();
+               ?? [];
     }
     
 }

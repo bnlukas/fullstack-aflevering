@@ -18,6 +18,18 @@
   <ItemGroup>
     <None Include="MainLayout.razor" />
     <None Include="Pages\CreateComment.razor" />
+    <None Include="Shared\obj\project.assets.json" />
+    <None Include="Shared\obj\Shared.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Shared\MainLayout.razor">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Shared\MainLayout.razor.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
