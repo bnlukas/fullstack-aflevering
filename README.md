@@ -9,8 +9,11 @@
 
 **reddit-fullstack**/
 ├── **backend**/ # ASP.NET Core Web API
+
 ├── **frontend**/ # Blazor WebAssembly app
+
 ├── **shared**/ # Shared class library
+
 └── **RedditApp.sln** # Main solution file
 
 
