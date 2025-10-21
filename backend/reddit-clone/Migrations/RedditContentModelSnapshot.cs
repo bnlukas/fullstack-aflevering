@@ -74,6 +74,10 @@ namespace RedditClone.Migrations
                     b.Property<int>("Upvotes")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 

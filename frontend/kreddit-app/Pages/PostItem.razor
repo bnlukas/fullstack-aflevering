@@ -17,6 +17,23 @@ else
     <div class="post-container">
         <div class="post-header">@post.User?.Username ?? "Ukendt bruger"</div>
         <div class="post-content">@post.Content</div>
+
+        <div class="post-content">
+            @if (!string.IsNullOrEmpty(post.Url))
+            {
+                <!-- Hvis der er URL - vis som link -->
+                <a href="@post.Url" target="_blank" class="post-link">
+                    🔗 @post.Url
+                </a>
+            }
+            else if (!string.IsNullOrEmpty(post.Content))
+            {
+                <!-- Hvis der er tekst - vis tekst -->
+                <div class="post-text">
+                    @post.Content
+                </div>
+            }
+        </div>
         <div class="post-actions">
             <span class="vote-count">Votes: @(post.Upvotes - post.Downvotes)</span>
             <button class="vote-button" @onclick="UpvotePost">▲ Upvote</button>

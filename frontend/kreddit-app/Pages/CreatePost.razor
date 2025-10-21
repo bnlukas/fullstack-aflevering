@@ -18,6 +18,10 @@
     <div class="form-group">
         <input @bind="title" placeholder="Titel" />
     </div>
+    
+    <div class="form-group">
+        <input @bind="url" placeholder="URL(valgfrit)"/>
+    </div>
 
     <div class="form-group">
         <textarea @bind="content" placeholder="Hvad vil du dele?"></textarea>
@@ -34,6 +38,7 @@
     private bool isSubmitting = false;
     private string? errorMessage;
     private string username = string.Empty;
+    private string url = string.Empty;
 
     private async Task HandleSubmit()
     {

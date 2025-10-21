@@ -22,5 +22,8 @@ public class Post
     public DateTime Created { get; set; } = DateTime.Now;
     public List<Comment> Comments { get; set; } = new List<Comment>();
     
+    public string Url { get; set; } = "";
+    public bool isLinkPost => !string.IsNullOrEmpty(Url);
+    
     
 }
