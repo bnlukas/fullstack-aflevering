@@ -50,14 +50,14 @@ public class ApiService
         return responce.IsSuccessStatusCode;
     }
     
-    public async Task<bool> UpvoteComment(int postId, int commentId)
+    public async Task<bool> UpvoteComment(int commentId)
     {
-        var response = await http.PostAsync($"api/threads/{postId}/upvotecomment?commentId={commentId}", null);
+        var response = await http.PostAsync($"api/comments/{commentId}/upvote", null);
         return response.IsSuccessStatusCode;
     }
-    public async Task<bool> DownvoteComment(int postId, int commentId)
+    public async Task<bool> DownvoteComment(int commentId)
     {
-        var response = await http.PostAsync($"api/threads/{postId}/downvotecomment?commentId={commentId}", null);
+        var response = await http.PostAsync($"api/comments/{commentId}/upvote", null);
         return response.IsSuccessStatusCode;
     }
 

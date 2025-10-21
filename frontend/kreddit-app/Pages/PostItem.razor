@@ -88,7 +88,7 @@ else
 
     private async Task UpvoteComment(int commentId)
     {
-        var success = await apiService.UpvoteComment(PostId, commentId);
+        var success = await apiService.UpvoteComment(commentId);
         if (success && post !=null)
         {
             var comment = post.Comments.FirstOrDefault(c => c.Id == commentId);
@@ -102,7 +102,7 @@ else
 
     private async Task DownvoteComment(int commentId)
     {
-        var success = await apiService.DownvoteComment(PostId, commentId);
+        var success = await apiService.DownvoteComment(commentId);
         if (success && post !=null)
         {
             var comment = post.Comments.FirstOrDefault(c => c.Id == commentId);

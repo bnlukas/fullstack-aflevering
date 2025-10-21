@@ -82,7 +82,7 @@ app.MapPost("/api/threads/{id}/comments", async (DataService service, int id, Co
 });
 
 
-//_____ upvote
+//_____ upvote 
 app.MapPost("/api/threads/{id}/upvote", async (DataService service, int id) =>
 {
     var succes = await service.VoteThread(id, DataService.VoteType.Up);
@@ -97,14 +97,14 @@ app.MapPost("/api/threads/{id}/downvote", async (DataService service, int id) =>
 });
 
 //_____ vote on comment 
-app.MapPost("/api/threads/{id}/upvotecomments", async (DataService service, int commentId) =>
+app.MapPost("/api/comments/{commentId}/upvote", async (DataService service, int commentId) =>
 {
     var succes = await service.VoteComment(commentId, DataService.VoteType.Up);
     return succes ? Results.Ok() : Results.NotFound();
 });
 
 //_____ vote on comment 
-app.MapPost("/api/threads/{id}/downvotecomments", async (DataService service, int commentId) =>
+app.MapPost("/api/comments/{commentId}/downvote", async (DataService service, int commentId) =>
 {
     var succes = await service.VoteComment(commentId, DataService.VoteType.Down);
     return succes ? Results.Ok() : Results.NotFound();
