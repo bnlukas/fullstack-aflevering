@@ -1,0 +1,75 @@
+@using kreddit_app.Data
+@inject ApiService apiService
+
+<div class="create-comment">
+    <h5>Skriv en kommentar</h5>
+    <div class="form-group">
+        <input @bind="username" placeholder="Dit navn" class="form-control" />
+    </div>
+    <div class="form-group">
+        <textarea @bind="content" placeholder="Din kommentar..." class="form-control" rows="3"></textarea>
+    </div>
+    <button @onclick="SubmitComment"
+            disabled="@(string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(content) || isSubmitting)"
+            class="submit-comment-button"> 
+        @if (isSubmitting)
+        {
+            <span>Sender...</span>
+        }
+        else
+        {
+            <span>Send kommentar</span>
+        }
+    </button>
+    
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="error-message">@errorMessage</div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int PostId { get; set; }
+    
+    private string? content;
+    private string? username;
+    private bool isSubmitting = false;
+    private string? errorMessage;
+
+    private async Task SubmitComment()
+    {
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(content))
+            return;
+
+        isSubmitting = true;
+        errorMessage = null;
+
+        try
+        {
+            var success = await apiService.CreateComment(content, PostId, username);
+            
+            if (success)
+            {
+                // Nulstil formularen
+                username = null;
+                content = null;
+                
+                // Opdater siden for at vise den nye kommentar
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                errorMessage = "Kunne ikke oprette kommentar. Prøv igen.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Der skete en fejl: " + ex.Message;
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+}

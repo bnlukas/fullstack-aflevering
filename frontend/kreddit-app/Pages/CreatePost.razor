@@ -1,0 +1,84 @@
+﻿@using System.Data
+@using kreddit_app.Data
+@using shared.Model
+@inject ApiService apiService
+
+<div class="create-post">
+    <h2>Opret et nyt opslag</h2>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="error-message">@errorMessage</div>
+    }
+
+    <div class="form-group">
+        <input @bind="username" placeholder="Dit navn, tak" />
+    </div>
+
+    <div class="form-group">
+        <input @bind="title" placeholder="Titel" />
+    </div>
+
+    <div class="form-group">
+        <textarea @bind="content" placeholder="Hvad vil du dele?"></textarea>
+    </div>
+
+    <button class="submit-button" @onclick="HandleSubmit" disabled="@isSubmitting">
+        @(isSubmitting ? "Sender..." : "Opret opslag")
+    </button>
+</div>
+
+@code {
+    private string title = string.Empty;
+    private string content = string.Empty;
+    private bool isSubmitting = false;
+    private string? errorMessage;
+    private string username = string.Empty;
+
+    private async Task HandleSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(content))
+        {
+            errorMessage = "Udfyld venligst alle felter.";
+            isSubmitting = false;
+            return;
+        }
+
+        try
+        {
+            var newPost = new Post
+            {
+                Title = title,
+                Content = content,
+                User = new User { Username = username.Trim() }, // Trim whitespace
+                Created = DateTime.UtcNow
+            };
+
+            var result = await apiService.CreatePost(newPost);
+
+            if (result == null)
+            {
+                errorMessage = "Noget gik galt. Prøv igen.";
+            }
+            else
+            {
+                title = string.Empty;
+                content = string.Empty;
+                username = string.Empty;
+
+                await InvokeAsync(StateHasChanged); 
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Fejl: {ex.Message}";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+}

@@ -1,0 +1,116 @@
+﻿@page "/post/{id}"
+@inject NavigationManager NavigationManager
+@using kreddit_app.Data
+@using shared.Model
+@inject ApiService apiService
+
+<PageTitle>Post</PageTitle>
+
+<a href="/" class="btn btn-link">← Tilbage</a>
+
+@if (post == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="post-container">
+        <div class="post-header">@post.User?.Username ?? "Ukendt bruger"</div>
+        <div class="post-content">@post.Content</div>
+        <div class="post-actions">
+            <span class="vote-count">Votes: @(post.Upvotes - post.Downvotes)</span>
+            <button class="vote-button" @onclick="UpvotePost">▲ Upvote</button>
+            <button class="vote-button" @onclick="DownvotePost">▼ Downvote</button>
+        </div>
+        <div class="small text-muted">
+            Oprettet: @post.Created.ToLocalTime().ToString("dd/MM/yyyy HH:mm")
+        </div>
+    </div>
+    
+    <div class="post-container comment-list">
+        <h5>Kommentarer</h5>
+
+        @if (post.Comments?.Any() == true)
+        {
+            @foreach (var comment in post.Comments)
+            {
+                <div class="comment">
+                    <span class="comment-username">@comment.User?.Username ?? "Anon"</span>
+                    <div class="comment-content">@comment.Content</div>
+                    <div class="post-actions">
+                        <span class="vote-count">Votes: @(comment.Upvotes - comment.Downvotes)</span>
+                        <button class="vote-button" @onclick="() => UpvoteComment(comment.Id)">▲</button>
+                        <button class="vote-button" @onclick="() => DownvoteComment(comment.Id)">▼</button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Ingen kommentarer endnu. Vær den første til at kommentere!</p>
+        }
+
+        <CreateComment PostId="@PostId" />
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    private int PostId => int.TryParse(Id, out var parsedId) ? parsedId : 0;
+    private Post? post;
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await apiService.GetPost(PostId);
+    }
+
+    private async Task UpvotePost()
+    {
+        var success = await apiService.UpvotePost(PostId);
+        if (success && post != null) 
+        {
+            post.Upvotes++;
+            StateHasChanged();
+        }
+    }
+
+    private async Task DownvotePost()
+    {
+        var success = await apiService.DownvotePost(PostId);
+        if (success && post != null) 
+        {
+            post.Downvotes++;
+            StateHasChanged();
+        }
+    }
+
+    private async Task UpvoteComment(int commentId)
+    {
+        var success = await apiService.UpvoteComment(PostId, commentId);
+        if (success && post !=null)
+        {
+            var comment = post.Comments.FirstOrDefault(c => c.Id == commentId);
+            if (comment != null) 
+            {
+                comment.Upvotes++;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private async Task DownvoteComment(int commentId)
+    {
+        var success = await apiService.DownvoteComment(PostId, commentId);
+        if (success && post !=null)
+        {
+            var comment = post.Comments.FirstOrDefault(c => c.Id == commentId);
+            if (comment != null) 
+            {
+                comment.Downvotes++;
+                StateHasChanged();
+            }
+        }
+    }
+}

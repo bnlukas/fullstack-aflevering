@@ -1,0 +1,26 @@
+# .NET build outputs
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.idea/
+*.db
+*.dll
+*.pdb
+*.cache
+
+# Rider
+*.iml
+.idea/
+out/
+
+# Blazor/WebAssembly
+wwwroot/_framework/
+
+# NuGet
+*.nupkg
+*.nuget/
+packages/

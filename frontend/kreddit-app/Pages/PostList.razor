@@ -1,0 +1,107 @@
+﻿@using kreddit_app.Data
+@using shared.Model
+@inject ApiService apiService
+
+<div class="feed-controls">
+    <div class="sort-filter-container">
+        <select value="@currentSort" @onchange="HandleSortChange">
+            <option value="newest">Nyeste</option>
+            <option value="oldest">Ældste</option>
+            <option value="votes">Mest populære</option>
+            <option value="comments">Mest kommenterede</option>
+        </select>
+
+        <select value="@currentFilter" @onchange="HandleFilterChange">
+            <option value="all">Alle opslag</option>
+            <option value="popular">Populære (10+ votes)</option>
+            <option value="controversial">Kontroversielle</option>
+        </select>
+    </div>
+</div>
+
+@if (posts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="feed-container">
+        @foreach (var post in posts)
+        {
+            <div class="post">
+                <div class="post-user">@post.User?.Username</div>
+                <div class="post-content">
+                    <strong>@post.Title</strong> - @post.Content
+                </div>
+                <div class="post-meta">
+                    <span class="post-date">@post.Created.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</span>
+                    <span class="comment-count">@(post.Comments?.Count ?? 0) kommentarer</span>
+                </div>
+                <div class="post-actions">
+                    <span class="vote-count">Votes: @(post.Upvotes - post.Downvotes)</span>
+                    <button class="vote-button" @onclick="() => UpvotePost(post.Id)">▲</button>
+                    <button class="vote-button" @onclick="() => DownvotePost(post.Id)">▼</button>
+                    <a href="/post/@post.Id">[Detaljer]</a>
+                </div>
+
+                @if (post.Comments?.Any() == true)
+                {
+                    @foreach (var comment in post.Comments.Take(2))
+                    {
+                        <div class="comment-preview">
+                            <strong>@comment.User?.Username</strong>: @comment.Content
+                        </div>
+                    }
+                    @if (post.Comments.Count > 2)
+                    {
+                        <div class="more-comments">
+                            og @(post.Comments.Count - 2) flere kommentarer...
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private Post[]? posts;
+    private string currentSort = "newest";
+    private string currentFilter = "all";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ReloadPosts();
+    }
+
+    private async Task HandleSortChange(ChangeEventArgs e)
+    {
+        currentSort = e.Value?.ToString() ?? "newest";
+        await ReloadPosts();
+    }
+
+    private async Task HandleFilterChange(ChangeEventArgs e)
+    {
+        currentFilter = e.Value?.ToString() ?? "all";
+        await ReloadPosts();
+    }
+
+    private async Task ReloadPosts()
+    {
+        posts = await apiService.GetPostsSorted(currentSort, currentFilter);
+    }
+
+    private async Task UpvotePost(int id)
+    {
+        var success = await apiService.UpvotePost(id);
+        if (success)
+            await ReloadPosts();
+    }
+
+    private async Task DownvotePost(int id)
+    {
+        var success = await apiService.DownvotePost(id);
+        if (success)
+            await ReloadPosts();
+    }
+}
