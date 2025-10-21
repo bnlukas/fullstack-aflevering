@@ -73,4 +73,6 @@
 
 **dotnet run** 
 
+
+**SÅ BURDE DET KØRER** 
 **
